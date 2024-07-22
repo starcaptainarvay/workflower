@@ -1,11 +1,18 @@
-local debug = require(script.Parent.Parent:WaitForChild("debug"))
-local event = require(script.Parent.Parent:WaitForChild("event"))
-local util  = require(script.Parent:WaitForChild("util"))
+local debug = require(script.Parent.Parent.debug)
+local event = require(script.Parent.Parent.event)
+local util  = require(script.Parent.util)
 
 local bucket = {}
 bucket.__index = bucket
 
-function bucket.new(_next)
+type AbstractBucket = {
+    contents: { any },
+    get: (Bucket) -> any...
+}
+
+export type Bucket = AbstractBucket & event.Observable
+
+function bucket.new(_next): Bucket
     local _bucket = setmetatable({ contents = {}, _events = {} }, bucket)
 
     local function cell_fn(...)
@@ -17,11 +24,11 @@ function bucket.new(_next)
     return _bucket, cell_fn
 end
 
-function bucket.get(self)
+function bucket.get(self: Bucket): any...
     return unpack(self.contents)
 end
 
-function bucket.set(self, ...)
+function bucket.set(self: Bucket, ...)
     self.contents = {...}
     self:dispatch("value", ...)
 end

@@ -1,6 +1,6 @@
 local pipe = {}
 
-function pipe.new(_next, fn)
+function pipe.new(_next: string, fn: (any...) -> (any...)): (any...) -> (string, any...)
     local function cell_fn(...)
         fn(...)
 

@@ -3,3 +3,7 @@
 .vscode/*
 /.vscode
 ./.vscode
+
+./src
+src/
+default.project.json

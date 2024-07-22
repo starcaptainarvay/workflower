@@ -1,4 +1,4 @@
-local debug = require("workflower.debug")
+local debug = require(script.Parent.debug)
 
 local function graph_tostring(graph)
     local content = "\n"

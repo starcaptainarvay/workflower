@@ -1,12 +1,26 @@
-local debug = require(script.Parent.Parent:WaitForChild("debug"))
-local event = require(script.Parent.Parent:WaitForChild("event"))
-local util  = require(script.Parent:WaitForChild("util"))
+local debug = require(script.Parent.Parent.debug)
+local event = require(script.Parent.Parent.event)
+local util  = require(script.Parent.util)
 
 local queue = {}
 queue.__index = queue
 
-function queue.new(_next)
-    local _queue = setmetatable({ list = {}, _events = {} }, queue)
+type AbstractQueue = {
+    list: { { any } },
+    empty: (Queue) -> boolean,
+    get: (Queue, number) -> any...,
+    pop: (Queue) -> any...,
+    peek: (Queue) -> any...,
+    push: (Queue, any...) -> nil,
+    size: (Queue) -> number,
+    iterator: (Queue) -> (() -> any?),
+    consume: (Queue) -> (() -> any?)
+}
+
+export type Queue = AbstractQueue & event.Observable
+
+function queue.new(_next: string): (Queue, (any...) -> (string, any...))
+    local _queue: Queue = setmetatable({ list = {}, _events = {} }, queue)
 
     local function cell_fn(...)
         _queue:push({...})
@@ -17,32 +31,32 @@ function queue.new(_next)
     return _queue, cell_fn
 end
 
-function queue.size(self)
+function queue.size(self: Queue): number
     return #self.list
 end
 
-function queue.get(self, i)
+function queue.get(self: Queue, i: number)
     return unpack(self.list[i])
 end
 
-function queue.pop(self)
+function queue.pop(self: Queue)
     return unpack(table.remove(self.list, 1))
 end
 
-function queue.peek(self)
+function queue.peek(self: Queue)
     return unpack(self.list[1])
 end
 
-function queue.empty(self)
+function queue.empty(self: Queue): boolean
     return #self.list == 0
 end
 
-function queue.push(self, item)
+function queue.push(self: Queue, item)
     table.insert(self.list, item)
     self:dispatch("value", unpack(item))
 end
 
-function queue.iterator(self)
+function queue.iterator(self: Queue): () -> any?
     local index = 0
     local function iterate()
         index = index + 1
@@ -52,7 +66,7 @@ function queue.iterator(self)
     return iterate
 end
 
-function queue.consume(self)
+function queue.consume(self: Queue): () -> any?
     local function iterate()
         if not self:empty() then return self:pop() end
     end
@@ -64,7 +78,7 @@ local function string_and_indent(v)
     return tostring(v):gsub("\n", "\n\t")
 end
 
-function queue.__tostring(self)
+function queue.__tostring(self: Queue)
     local open, close = debug.format("Queue {", debug.formatting.presets.fg_green, debug.formatting.presets.bold),
         debug.format("}", debug.formatting.presets.fg_green, debug.formatting.presets.bold)
 
