@@ -1,6 +1,6 @@
-local debug = require("workflower.debug")
-local event = require("workflower.event")
-local util  = require("workflower.collect.util")
+local debug = require(script.Parent.Parent:WaitForChild("debug"))
+local event = require(script.Parent.Parent:WaitForChild("event"))
+local util  = require(script.Parent:WaitForChild("util"))
 
 local queue = {}
 queue.__index = queue

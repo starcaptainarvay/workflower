@@ -1,12 +1,13 @@
 --- Workflower module implementation
 
-local bucket, pipe, queue   = require("workflower.collect.bucket"),
-                            require("workflower.collect.pipe"),
-                            require("workflower.collect.queue")
+local collect = require(script:WaitForChild("collect"))
+local bucket, pipe, queue   = require(collect.bucket),
+                            require(collect.pipe),
+                            require(collect.queue)
 
-local stringify             = require("workflower.stringify")
-local debug                 = require("workflower.debug")
-local event                 = require("workflower.event")
+local stringify             = require(script:WaitForChild("stringify"))
+local debug                 = require(script:WaitForChild("debug"))
+local event                 = require(script:WaitForChild("event"))
 
 local workflower            = {}
 
