@@ -1,6 +1,6 @@
 local event = require("workflower.event")
 local debug = require("workflower.debug")
-local util  = require("collect.util")
+local util  = require("workflower.collect.util")
 
 local bucket = {}
 bucket.__index = bucket

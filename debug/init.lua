@@ -1,6 +1,6 @@
 local debugger = {}
 
-local presets = require("debug.formatting_presets")
+local presets = require("workflower.debug.formatting_presets")
 
 debugger.formatting = {}
 debugger.formatting.presets = {

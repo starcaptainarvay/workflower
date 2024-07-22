@@ -1,6 +1,6 @@
 local debug = require("workflower.debug")
 local event = require("workflower.event")
-local util  = require("collect.util")
+local util  = require("workflower.collect.util")
 
 local queue = {}
 queue.__index = queue
