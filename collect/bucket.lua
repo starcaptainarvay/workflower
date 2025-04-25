@@ -5,8 +5,8 @@ local util  = require("workflower.collect.util")
 local bucket = {}
 bucket.__index = bucket
 
-function bucket.new(_next)
-    local _bucket = setmetatable({ contents = {}, _events = {} }, bucket)
+function bucket.new(_next, ...)
+    local _bucket = setmetatable({ contents = {...}, _events = {} }, bucket)
 
     local function cell_fn(...)
         _bucket:set(...)
