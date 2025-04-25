@@ -136,8 +136,8 @@ function workflower.execute(cell, call_index, ...)
     return unpack(results)
 end
 
-function workflower.bucket(_next)
-    return bucket.new(_next)
+function workflower.bucket(_next, ...)
+    return bucket.new(_next, ...)
 end
 
 function workflower.pipe(_next, fn)
