@@ -17,6 +17,14 @@ function queue.new(_next)
     return _queue, cell_fn
 end
 
+function queue.list(self)
+    local out = {}
+    for _, item in pairs(self.list) do
+        table.insert(out, item)
+    end
+    return out
+end
+
 function queue.size(self)
     return #self.list
 end
