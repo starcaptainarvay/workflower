@@ -20,7 +20,7 @@ end
 function queue.list(self)
     local out = {}
     for _, item in pairs(self.list) do
-        table.insert(out, item)
+        table.insert(out, unpack(item))
     end
     return out
 end
