@@ -17,7 +17,7 @@ function queue.new(_next)
     return _queue, cell_fn
 end
 
-function queue.list(self)
+function queue.array(self)
     local out = {}
     for _, item in pairs(self.list) do
         table.insert(out, unpack(item))
